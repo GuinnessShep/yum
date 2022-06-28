@@ -1,13 +1,11 @@
-import "dotenv/config";
-
 import fs from "fs";
 import https from "https";
 import http from "http";
 
 import { Page } from "puppeteer";
 
-import { Rescue } from "../constants/rescue";
-import { Vocab } from "../constants/vocab";
+import Rescue from "../constants/rescue";
+import Vocab from "../constants/vocab";
 
 export namespace Downloader {
   //================
@@ -102,3 +100,5 @@ export namespace Downloader {
     }
   }
 }
+
+export default Downloader;

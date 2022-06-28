@@ -1,7 +1,7 @@
 import { Page } from "puppeteer";
 
-import { Downloader } from "../system/downloader";
-import { InteractionsConstants } from "../constants/interactionsConstants";
+import Downloader from "../system/downloader";
+import InteractionsConstants from "../constants/interactionsConstants";
 
 export namespace Scraper {
   //================
@@ -41,3 +41,5 @@ export namespace Scraper {
     await downloadPageContent(page);
   }
 }
+
+export default Scraper;

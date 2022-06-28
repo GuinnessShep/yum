@@ -1,7 +1,6 @@
-import "dotenv/config";
 import { Page } from "puppeteer";
 
-import { InteractionsConstants } from "../constants/interactionsConstants";
+import InteractionsConstants from "../constants/interactionsConstants";
 
 export namespace EntryPortal {
   //================
@@ -38,3 +37,5 @@ export namespace EntryPortal {
     await passWall(page);
   }
 }
+
+export default EntryPortal;

@@ -1,4 +1,3 @@
-import "dotenv/config";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { Browser } from "puppeteer";
@@ -35,3 +34,5 @@ export namespace BlackArt {
     return page;
   }
 }
+
+export default BlackArt;

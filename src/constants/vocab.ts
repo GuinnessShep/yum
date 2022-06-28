@@ -14,9 +14,8 @@ export namespace Vocab {
   // * ... Funs
   //=============
   export function retrying_msg(retry_counter: number) {
-    return `[Struggling...]\t\t Retrying to download... (Retry ${
-      retry_counter + 1
-    })`;
+    return `[Struggling...]\t\t Retrying to download... (Retry ${retry_counter + 1
+      })`;
   }
 
   export function skipped_msg(content_url: string) {
@@ -27,3 +26,5 @@ export namespace Vocab {
     return `[Downloading...]\t ${url}`;
   }
 }
+
+export default Vocab;

@@ -9,3 +9,5 @@ export namespace InteractionsConstants {
   export const NEXT_PAGE_HOTKEY: KeyInput = "ArrowRight";
   export const CONFIRM_HOTKEY: KeyInput = "Enter";
 }
+
+export default InteractionsConstants;
