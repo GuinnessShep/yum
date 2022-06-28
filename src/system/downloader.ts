@@ -67,7 +67,7 @@ export namespace Downloader {
   async function doDlContent(content_url: string, page: Page) {
     let retry_counter = 0;
     const max_retry =
-      parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string) - 1 ||
+      parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string) ||
       Rescue.DEFAULT_MAX_RETRY;
 
     const folder = process.env.VONAYUTA_DOWNLOAD_FOLDER as string;
@@ -84,7 +84,7 @@ export namespace Downloader {
         if (max_retry <= 0) break;
         console.log(error);
         await failedDlDelay(page, retry_counter);
-        if (retry_counter >= max_retry) {
+        if (retry_counter + 1 >= max_retry) {
           console.log(Vocab.skipped_msg(content_url));
           break;
         }
