@@ -13,4 +13,6 @@ Just edit the .env file
 This project demonstrates how easy it would be to scrap any website on the internet if they were all so well coded and permissive.
 The code is voluntarily expressive and clean, in order to respect the educational stake of this project.
 
+---
+
 <p align="center"><i>This GitHub repository is NOT endorsed by e621 in any way.</i></p>
