@@ -56,7 +56,7 @@ export namespace Downloader {
 
   async function failedDlDelay(page: Page, retry_counter: number) {
     const delay =
-      parseInt(process.env.VONAYUTA_DOWNLOAD_RETRY_SLEEP_MS as string) ||
+      parseInt(process.env.VONAYUTA_DOWNLOAD_RETRY_SLEEP_MS as string, 10) ||
       Rescue.DEFAULT_RETRY_DELAY;
 
     console.log(Vocab.retrying_msg(retry_counter));
@@ -67,7 +67,7 @@ export namespace Downloader {
   async function doDlContent(content_url: string, page: Page) {
     let retry_counter = 0;
     const max_retry =
-      parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string) ||
+      parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string, 10) ||
       Rescue.DEFAULT_MAX_RETRY;
 
     const folder = process.env.VONAYUTA_DOWNLOAD_FOLDER as string;
