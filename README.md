@@ -1,3 +1,5 @@
+<p align="center"><img src="https://user-images.githubusercontent.com/108313714/176171014-743cbee4-74ca-447e-8717-14cfd7669707.png" alt="e621 furry website logo yiff" /></p>
+
 # Usage
 
 `yarn start` for a ride!
@@ -13,4 +15,4 @@ The code is voluntarily expressive and clean, in order to respect the educationa
 
 ![e621-furry-website-logo-yiff](https://user-images.githubusercontent.com/108313714/176171014-743cbee4-74ca-447e-8717-14cfd7669707.png)
 
-_This repository is NOT endorsed by e621 in any way._
+<p align="center">_This GitHub repository is NOT endorsed by e621 in any way._</p>
