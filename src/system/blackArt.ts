@@ -16,7 +16,7 @@ export namespace BlackArt {
   }
 
   export async function getFirstTabRepresentation(browser: Browser) {
-    let pages = await browser.pages();
+    const pages = await browser.pages();
     const page = pages[0];
     const skip_css = process.env.VONAYUTA_SKIP_CSS === "true";
     const skipped_requests = skip_css
