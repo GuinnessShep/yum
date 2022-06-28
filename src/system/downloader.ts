@@ -81,11 +81,11 @@ export namespace Downloader {
         console.log(Vocab.DOWNLOADED_MSG);
         break;
       } catch (error) {
+        console.log(error);
         if (max_retry <= 0) {
           console.log(Vocab.skipped_msg(content_url));
           break;
         }
-        console.log(error);
         await failedDlDelay(page, retry_counter);
         if (retry_counter + 1 >= max_retry) {
           console.log(Vocab.skipped_msg(content_url));
