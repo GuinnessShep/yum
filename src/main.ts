@@ -21,8 +21,4 @@ async function main() {
   console.log(Vocab.WORK_DONE_MSG);
 }
 
-try {
-  main();
-} catch (error) {
-  console.log(error);
-}
+main();
