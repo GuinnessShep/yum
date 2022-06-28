@@ -82,15 +82,11 @@ export namespace Downloader {
         break;
       } catch (error) {
         console.log(error);
-        if (max_retry <= 0) {
+        if (max_retry <= 0 || retry_counter + 1 >= max_retry) {
           console.log(Vocab.skipped_msg(content_url));
           break;
         }
         await failedDlDelay(page, retry_counter);
-        if (retry_counter + 1 >= max_retry) {
-          console.log(Vocab.skipped_msg(content_url));
-          break;
-        }
         retry_counter += 1;
       }
     }
