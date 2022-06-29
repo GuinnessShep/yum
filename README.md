@@ -15,4 +15,4 @@ The code is voluntarily expressive and clean, in order to respect the educationa
 
 ---
 
-<p align="center"><i>This GitHub repository is NOT endorsed by e621 in any way.</i></p>
+<p align="center"><em>This GitHub repository is NOT endorsed by e621 in any way.</em></p>
