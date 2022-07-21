@@ -21,7 +21,7 @@ export namespace Scraper {
 
   async function downloadPageContent(page: Page) {
     const content = await retrieveContent(page);
-    await Downloader.dlContent(content, page);
+    await Downloader.downloadContent(content, page);
   }
 
   //===============

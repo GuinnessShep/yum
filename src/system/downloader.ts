@@ -62,7 +62,7 @@ export namespace Downloader {
     await page.waitForTimeout(delay);
   }
 
-  async function doDlContent(content_url: string, page: Page) {
+  async function doDownloadContent(content_url: string, page: Page) {
     const max_retry =
       parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string, 10) ||
       Rescue.DEFAULT_MAX_RETRY;
@@ -93,10 +93,10 @@ export namespace Downloader {
   //===============
   // * ... Public
   //===============
-  export async function dlContent(content: Array<string>, page: Page) {
+  export async function downloadContent(content: Array<string>, page: Page) {
     for (const url of content) {
       console.log(Vocab.downloading_msg(url));
-      await doDlContent(url, page);
+      await doDownloadContent(url, page);
     }
   }
 }
