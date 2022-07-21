@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/prompts": "^2.0.14",
     "dotenv": "^16.0.1",
     "puppeteer": "^15.1.1",
     "puppeteer-extra": "^3.3.0",

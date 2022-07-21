@@ -52,18 +52,17 @@ export namespace Downloader {
     });
   }
 
-  async function failedDlDelay(page: Page, retry_counter: number) {
+  async function failedDlDelay(retry_counter: number, page: Page) {
     const delay =
       parseInt(process.env.VONAYUTA_DOWNLOAD_RETRY_SLEEP_MS as string, 10) ||
       Rescue.DEFAULT_RETRY_DELAY;
 
-    console.log(Vocab.retrying_msg(retry_counter));
+    console.log(Vocab.retrying_download_msg(retry_counter));
     if (delay <= 0) return;
     await page.waitForTimeout(delay);
   }
 
   async function doDlContent(content_url: string, page: Page) {
-    let retry_counter = 0;
     const max_retry =
       parseInt(process.env.VONAYUTA_MAX_DOWNLOAD_RETRY as string, 10) ||
       Rescue.DEFAULT_MAX_RETRY;
@@ -72,6 +71,7 @@ export namespace Downloader {
     const segments = new URL(content_url).pathname.split("/");
     const filename = segments.pop() || segments.pop();
     const filepath = `${folder}/${filename}`;
+    let retry_counter = 0;
 
     while (true) {
       try {
@@ -84,7 +84,7 @@ export namespace Downloader {
           console.log(Vocab.skipped_msg(content_url));
           break;
         }
-        await failedDlDelay(page, retry_counter);
+        await failedDlDelay(retry_counter, page);
         retry_counter += 1;
       }
     }
