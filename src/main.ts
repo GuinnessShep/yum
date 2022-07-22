@@ -5,7 +5,7 @@ import BlackArt from "./system/blackArt";
 import EntryPortal from "./browser_automations/entryPortal";
 import Scraper from "./browser_automations/webScraper";
 import Vocab from "./constants/vocab";
-import LoginManager from "./loginManager/loginManager";
+import LoginManager from "./login_manager/loginManager";
 
 async function runtime(page: Page) {
   console.log(Vocab.INITIALIZING_BROWSER_MSG);
