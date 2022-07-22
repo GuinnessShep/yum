@@ -1,33 +1,23 @@
 import { Page } from "puppeteer";
 
-import Vocab from "../constants/vocab";
 import InteractionsConstants from "../constants/interactionsConstants";
+import Vocab from "../constants/vocab";
+import EntryPortal from "../browser_automations/entryPortal";
 import Rescue from "../constants/rescue";
-import EntryPortal from "./entryPortal";
-import { exit } from "process";
 
-namespace AccountManager {
-  function skipLogin(username: string, password: string): Boolean {
-    return username.length <= 0 || password.length <= 0;
-  }
-
+namespace StandardLogin {
+  //================
+  // * ... Private
+  //================
   function randomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  async function getCredentials() {
-    // * ... {ToDo} login with a prompt
-    const username: string = process.env.VONAYUTA_USERNAME as string;
-    const password: string = process.env.VONAYUTA_PASSWORD as string;
-
-    return [username, password] as const;
   }
 
   async function gotoLoginPage(page: Page) {
     const login_page = InteractionsConstants.TARGETED_WEBSITE_LOGIN_PAGE;
 
     await page.goto(login_page, {
-      waitUntil: "networkidle2",
+      waitUntil: ["networkidle2", "domcontentloaded"],
     });
   }
 
@@ -38,7 +28,8 @@ namespace AccountManager {
   ) {
     const username_btn_id = InteractionsConstants.USERNAME_BTN_ID;
     const password_btn_id = InteractionsConstants.PASSWORD_BTN_ID;
-    const delay = randomInt(1450, 1850);
+    const t = InteractionsConstants.DEFAULT_TIMEOUT;
+    const delay = randomInt(t * 2, t * 2.5);
 
     await page.click(username_btn_id);
     await page.keyboard.type(username);
@@ -49,7 +40,9 @@ namespace AccountManager {
     await page.keyboard.type(password);
 
     await page.keyboard.press(InteractionsConstants.CONFIRM_HOTKEY);
-    await page.waitForNavigation({ waitUntil: "networkidle2" });
+    await page.waitForNavigation({
+      waitUntil: ["networkidle2", "domcontentloaded"],
+    });
   }
 
   async function typeCredentials(
@@ -58,8 +51,6 @@ namespace AccountManager {
     page: Page
   ) {
     const login_page = InteractionsConstants.TARGETED_WEBSITE_LOGIN_PAGE;
-    const abort_if_failed_login =
-      process.env.VONAYUTA_ABORT_SCRAPING_IF_FAILED_TO_LOGIN === "true";
     const max_retry =
       parseInt(process.env.VONAYUTA_MAX_LOGIN_RETRY as string, 10) ||
       Rescue.DEFAULT_MAX_LOGIN_RETRY;
@@ -68,40 +59,29 @@ namespace AccountManager {
     while (true) {
       await doTypeCredentials(username, password, page);
 
-      if (page.url() !== login_page) {
-        console.log(Vocab.SUCCESSFUL_LOGIN_MSG);
-        break;
-      }
+      if (page.url() !== login_page) break;
 
       console.log(Vocab.retrying_login_msg(retry_counter));
       if (max_retry <= 0 || retry_counter + 1 >= max_retry) {
-        console.log(Vocab.ABORTED_LOGIN_MSG);
-        if (abort_if_failed_login) {
-          console.log(Vocab.ABORTED_EVERYTHING_MSG);
-          exit(1);
-        }
+        console.log(Vocab.SKIPPED_STANDARD_LOGIN_MSG);
         break;
       }
       retry_counter += 1;
     }
   }
 
-  async function processLogin(page: Page) {
-    console.log(Vocab.INITIALIZING_LOGIN_MSG);
-    const [username, password] = await getCredentials();
-
-    await gotoLoginPage(page);
-    await EntryPortal.passWall(page, false);
-    if (skipLogin(username, password)) {
-      console.log(Vocab.SKIPPED_LOGIN_MSG);
-      return;
-    }
-    await typeCredentials(username, password, page);
+  //===============
+  // * ... Public
+  //===============
+  export function isAvailable(username: string, password: string): Boolean {
+    return username.length > 0 && password.length > 0;
   }
 
-  export async function login(page: Page) {
-    await processLogin(page);
+  export async function run(username: string, password: string, page: Page) {
+    console.log(Vocab.TRYING_STANDARD_LOGIN_MSG);
+    await gotoLoginPage(page);
+    await typeCredentials(username, password, page);
   }
 }
 
-export default AccountManager;
+export default StandardLogin;

@@ -26,9 +26,7 @@ export namespace BlackArt {
     page.on("request", (request) => {
       if (skipped_requests.indexOf(request.resourceType()) !== -1) {
         request.abort();
-      } else {
-        request.continue();
-      }
+      } else request.continue();
     });
 
     return page;

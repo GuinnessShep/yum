@@ -35,7 +35,9 @@ export namespace Scraper {
     while (next_page_exists) {
       await downloadPageContent(page);
       await page.keyboard.press(next_page_hotkey);
-      await page.waitForNavigation({ waitUntil: "networkidle2" });
+      await page.waitForNavigation({
+        waitUntil: ["networkidle2", "domcontentloaded"],
+      });
       next_page_exists = await page.$(next_page_btn_id);
     }
     await downloadPageContent(page);
